@@ -19,6 +19,10 @@ export class Web3Service {
     address: string,
     runner?: ContractRunner,
   ): TContract {
+    if (!runner) {
+      runner = this.getInfuraProvider('sepolia');
+    }
+
     if (typeof factory['connect'] === 'function') {
       return factory['connect'](address, runner);
     }
