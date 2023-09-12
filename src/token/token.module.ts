@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { TokenController } from './token.controller';
 
-@Module({})
+@Module({
+  controllers: [TokenController]
+})
 export class TokenModule {}
