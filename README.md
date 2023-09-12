@@ -10,6 +10,8 @@ This REST API is designed to provide access to data from DeFi contracts and stak
 $ npm install
 ```
 
+After the installation, contract types will be generated (See `postinstall` script)
+
 Create `.env` file by filling the `.env.example` file and renaming in to `.env`
 
 ## Running the app
