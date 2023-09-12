@@ -17,9 +17,9 @@ export class TokenController {
 
       const name = await token.name();
       const symbol = await token.symbol();
-      const decimalsBigIng = await token.decimals();
+      const decimals = await token.decimals();
 
-      return { name, symbol, decimals: decimalsBigIng.toString() };
+      return { name, symbol, decimals: decimals.toString() };
     } catch (error) {
       throw new BadRequestException('Ethereum address is not an ERC20 token');
     }
