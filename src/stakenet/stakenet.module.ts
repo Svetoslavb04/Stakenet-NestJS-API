@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { StakenetController } from './stakenet.controller';
 
-@Module({})
+@Module({
+  controllers: [StakenetController]
+})
 export class StakenetModule {}
