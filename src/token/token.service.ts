@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Web3Service } from 'src/web3/web3.service';
 import { ERC20, ERC20__factory } from 'types/ethers-contracts';
-import { EthereumAddressDTO } from './dto/ethereumAdress.dto';
+import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
 
 @Injectable()
 export class TokenService {

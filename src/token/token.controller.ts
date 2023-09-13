@@ -1,5 +1,5 @@
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
-import { EthereumAddressDTO } from './dto/ethereumAdress.dto';
+import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
 import { TokenService } from './token.service';
 
 @Controller('token')
