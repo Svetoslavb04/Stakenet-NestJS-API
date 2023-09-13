@@ -1,5 +1,5 @@
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common';
-import { EthereumAddress } from './dto/ethereumAdress.dto';
+import { EthereumAddressDTO } from './dto/ethereumAdress.dto';
 import { Web3Service } from 'src/web3/web3.service';
 import { ERC20, ERC20__factory } from 'types/ethers-contracts';
 
@@ -8,7 +8,7 @@ export class TokenController {
   constructor(private web3: Web3Service) {}
 
   @Get(':address')
-  async index(@Param('') params: EthereumAddress) {
+  async index(@Param('') params: EthereumAddressDTO) {
     try {
       const token = this.web3.getContractAt<ERC20__factory, ERC20>(
         ERC20__factory,
