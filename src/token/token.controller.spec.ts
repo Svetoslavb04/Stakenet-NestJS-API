@@ -37,6 +37,10 @@ describe('TokenController', () => {
     tokenController = module.get<TokenController>(TokenController);
   });
 
+  it('should be defined', () => {
+    expect(tokenController).toBeDefined();
+  });
+
   describe('index', () => {
     it('should return token information', async () => {
       const result = await tokenController.index({
