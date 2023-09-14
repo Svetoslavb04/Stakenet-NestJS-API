@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { EthereumAddressDTO } from 'src/dto/ethereumAdress.dto';
+import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
 
 @Controller('contract')
 export class StakenetController {
