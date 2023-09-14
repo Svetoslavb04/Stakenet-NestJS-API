@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TokenService } from './token.service';
-import { Web3Service } from '../web3/web3.service';
-import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
+import { TokenService } from '../token.service';
+import { Web3Service } from '../../web3/web3.service';
+import { EthereumAddressDTO } from '../../dto/ethereumAdress.dto';
 
 const web3ServiceMock = {
   getContractAt: jest.fn(),

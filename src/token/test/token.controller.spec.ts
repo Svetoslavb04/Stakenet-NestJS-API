@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BadRequestException } from '@nestjs/common';
 
-import { TokenController } from './token.controller';
-import { TokenService } from './token.service';
+import { TokenController } from '../token.controller';
+import { TokenService } from '../token.service';
 
-import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
+import { EthereumAddressDTO } from '../../dto/ethereumAdress.dto';
 
 describe('TokenController', () => {
   let tokenController: TokenController;

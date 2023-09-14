@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TokenModule } from './token.module';
-import { TokenController } from './token.controller';
-import { TokenService } from './token.service';
-import { Web3Module } from '../web3/web3.module';
 import { ConfigModule } from '@nestjs/config';
+import { TokenModule } from '../token.module';
+import { TokenController } from '../token.controller';
+import { TokenService } from '../token.service';
+import { Web3Module } from '../../web3/web3.module';
 
 describe('TokenModule', () => {
   let tokenModule: TestingModule;
