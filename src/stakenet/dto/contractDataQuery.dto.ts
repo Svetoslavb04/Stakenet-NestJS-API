@@ -6,7 +6,7 @@ import {
 } from 'class-validator';
 import { StakenetPropertyEnum } from '../enum/stakenetProperty.enum';
 import { StaknetPropertyWithRequiredUser } from '../enum/staknetPropertyWithRequiredUser.enum';
-import { StaknetPropertyWithOwner } from '../enum/staknetPropertyWithOwner.enum copy';
+import { StaknetPropertyWithOwner } from '../enum/staknetPropertyWithOwner.enum';
 import { StaknetPropertyWithSpender } from '../enum/staknetPropertyWithSpender.enum';
 import { Transform } from 'class-transformer';
 
