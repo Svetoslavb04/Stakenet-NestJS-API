@@ -4,10 +4,10 @@ import {
   IsEthereumAddress,
   ValidateIf,
 } from 'class-validator';
-import { StakenetPropertyEnum } from '../enum/stakenetProperty.enum';
-import { StaknetPropertyWithRequiredUser } from '../enum/staknetPropertyWithRequiredUser.enum';
-import { StaknetPropertyWithOwner } from '../enum/staknetPropertyWithOwner.enum';
-import { StaknetPropertyWithSpender } from '../enum/staknetPropertyWithSpender.enum';
+import { StakenetPropertyEnum } from '../enum/stakenet-property.enum';
+import { StaknetPropertyWithRequiredUser } from '../enum/staknet-property-with-required-user.enum';
+import { StaknetPropertyWithOwner } from '../enum/staknet-property-with-owner.enum';
+import { StaknetPropertyWithSpender } from '../enum/staknet-property-with-spender.enum';
 import { Transform } from 'class-transformer';
 
 export class ContractDataQuery {
