@@ -5,9 +5,9 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { StakenetPropertyEnum } from '../enum/stakenet-property.enum';
-import { StaknetPropertyWithRequiredUser } from '../enum/staknet-property-with-required-user.enum';
-import { StaknetPropertyWithOwner } from '../enum/staknet-property-with-owner.enum';
-import { StaknetPropertyWithSpender } from '../enum/staknet-property-with-spender.enum';
+import { StakenetPropertyWithRequiredUser } from '../enum/stakenet-property-with-required-user.enum';
+import { StakenetPropertyWithOwner } from '../enum/stakenet-property-with-owner.enum';
+import { StakenetPropertyWithSpender } from '../enum/stakenet-property-with-spender.enum';
 import { Transform } from 'class-transformer';
 
 export class ContractDataQuery {
@@ -16,26 +16,26 @@ export class ContractDataQuery {
   property: string;
 
   @ValidateIf(
-    (o: ContractDataQuery) => o.property in StaknetPropertyWithRequiredUser,
+    (o: ContractDataQuery) => o.property in StakenetPropertyWithRequiredUser,
   )
   @Transform((o) =>
-    o.obj.property in StaknetPropertyWithRequiredUser ? o.value : undefined,
+    o.obj.property in StakenetPropertyWithRequiredUser ? o.value : undefined,
   )
   @IsEthereumAddress()
   @IsNotEmpty()
   user: string;
 
-  @ValidateIf((o) => o.property in StaknetPropertyWithOwner)
+  @ValidateIf((o) => o.property in StakenetPropertyWithOwner)
   @Transform((o) =>
-    o.obj.property in StaknetPropertyWithOwner ? o.value : undefined,
+    o.obj.property in StakenetPropertyWithOwner ? o.value : undefined,
   )
   @IsEthereumAddress()
   @IsNotEmpty()
   owner: string;
 
-  @ValidateIf((o) => o.property in StaknetPropertyWithSpender)
+  @ValidateIf((o) => o.property in StakenetPropertyWithSpender)
   @Transform((o) =>
-    o.obj.property in StaknetPropertyWithSpender ? o.value : undefined,
+    o.obj.property in StakenetPropertyWithSpender ? o.value : undefined,
   )
   @IsEthereumAddress()
   @IsNotEmpty()
