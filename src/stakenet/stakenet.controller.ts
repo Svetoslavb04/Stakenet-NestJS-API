@@ -1,10 +1,14 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
+import { ContractDataQuery } from './dto/contractDataQuery.dto';
 
 @Controller('contract')
 export class StakenetController {
   @Get(':address')
-  async index(@Param('') params: EthereumAddressDTO) {
-    return null;
+  async index(
+    @Param('') params: EthereumAddressDTO,
+    @Query('') contractDataQuery: ContractDataQuery,
+  ) {
+    return { params, contractDataQuery };
   }
 }
