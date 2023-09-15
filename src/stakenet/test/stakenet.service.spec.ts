@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { StakenetService } from './stakenet.service';
+import { StakenetService } from '../stakenet.service';
 
 describe('StakenetService', () => {
   let service: StakenetService;
