@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Web3Service } from '../web3/web3.service';
 import { ERC20, ERC20__factory } from '../../types/ethers-contracts';
 import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
+import { AddressLike } from 'ethers';
 
 @Injectable()
 export class TokenService {
   constructor(private web3: Web3Service) {}
 
-  async getTokenBaseInformation(addressObject: EthereumAddressDTO) {
+  async getTokenBaseInformation(address: string) {
     const token = this.web3.getContractAt<ERC20__factory, ERC20>(
       ERC20__factory,
-      addressObject.address,
+      address,
     );
 
     const name = await token.name();
