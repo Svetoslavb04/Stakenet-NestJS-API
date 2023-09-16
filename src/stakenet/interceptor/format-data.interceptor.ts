@@ -33,32 +33,39 @@ export class FormatDataInterceptor<T>
           const lockDurationInSeconds: bigint = data;
 
           let result: {
-            data: undefined;
-            lockDurationIn: {
-              days: number | string;
-              hours: number | string;
-              minutes: number | string;
-              seconds: number | string;
-              milliseconds: number | string;
+            data: {
+              raw: string;
+              lockDurationIn: {
+                days: number | string;
+                hours: number | string;
+                minutes: number | string;
+                seconds: number | string;
+                milliseconds: number | string;
+              };
             };
           } = {
-            data: undefined,
-            lockDurationIn: {
-              days: (lockDurationInSeconds / 86400n).toString(),
-              hours: (lockDurationInSeconds / 3600n).toString(),
-              minutes: (lockDurationInSeconds / 60n).toString(),
-              seconds: lockDurationInSeconds.toString(),
-              milliseconds: (lockDurationInSeconds * 1000n).toString(),
+            data: {
+              raw: lockDurationInSeconds.toString(),
+              lockDurationIn: {
+                days: (lockDurationInSeconds / 86400n).toString(),
+                hours: (lockDurationInSeconds / 3600n).toString(),
+                minutes: (lockDurationInSeconds / 60n).toString(),
+                seconds: lockDurationInSeconds.toString(),
+                milliseconds: (lockDurationInSeconds * 1000n).toString(),
+              },
             },
           };
 
           if (lockDurationInSeconds <= Number.MAX_SAFE_INTEGER) {
             const lockDurationInSecondsNumber = Number(lockDurationInSeconds);
-            result.lockDurationIn.days = lockDurationInSecondsNumber / 86400;
-            result.lockDurationIn.hours = lockDurationInSecondsNumber / 3600;
-            result.lockDurationIn.minutes = lockDurationInSecondsNumber / 60;
-            result.lockDurationIn.seconds = lockDurationInSecondsNumber;
-            result.lockDurationIn.milliseconds =
+            result.data.lockDurationIn.days =
+              lockDurationInSecondsNumber / 86400;
+            result.data.lockDurationIn.hours =
+              lockDurationInSecondsNumber / 3600;
+            result.data.lockDurationIn.minutes =
+              lockDurationInSecondsNumber / 60;
+            result.data.lockDurationIn.seconds = lockDurationInSecondsNumber;
+            result.data.lockDurationIn.milliseconds =
               lockDurationInSecondsNumber * 1000;
           }
 
