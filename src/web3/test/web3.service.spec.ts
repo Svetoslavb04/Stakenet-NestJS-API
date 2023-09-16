@@ -81,4 +81,35 @@ describe('Web3Service', () => {
       ).toThrowError(`Method 'connect' not found on the factory.`);
     });
   });
+
+  describe('getEvents', () => {
+    it('should get correctly return events', async () => {
+      const erc20Contract = web3Service.getContractAt<ERC20__factory, ERC20>(
+        ERC20__factory,
+        erc20address,
+      );
+
+      const events = await web3Service.getEvents<ERC20>(
+        erc20Contract,
+        'Transfer',
+      );
+
+      expect(events.length).not.toBe(0);
+    });
+
+    it('should return events with with search argument', async () => {
+      const erc20Contract = web3Service.getContractAt<ERC20__factory, ERC20>(
+        ERC20__factory,
+        erc20address,
+      );
+
+      const events = await web3Service.getEvents<ERC20>(
+        erc20Contract,
+        'Transfer(address,address,uint256)',
+        '0x0c9276b8bAf2b37140679204027d574AC2D71297',
+      );
+
+      expect(events.length).not.toBe(0);
+    });
+  });
 });
