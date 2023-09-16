@@ -72,6 +72,21 @@ export class FormatDataInterceptor<T>
           return result;
         }
 
+        if ([StakenetPropertyEnum.userStakedTimestamp].includes(property)) {
+          const numberTimestamp = Number(data);
+
+          return {
+            data: {
+              raw: numberTimestamp,
+              userStakedTimestamp: {
+                timestampInSeconds: numberTimestamp,
+                timestampInMilliseconds: numberTimestamp * 1000,
+                date: new Date(numberTimestamp * 1000),
+              },
+            },
+          };
+        }
+
         return { data: typeof data === 'bigint' ? data.toString() : data };
       }),
     );
