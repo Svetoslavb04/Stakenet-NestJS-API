@@ -38,7 +38,13 @@ export class StakenetService {
     property: string,
     owner: string,
     spender: string,
-  ) {}
+  ) {
+    const stakenet = this.createStakenetContract(address);
+
+    if (typeof stakenet[property] === 'function') {
+      return await stakenet[property](owner, spender);
+    }
+  }
 
   async getUserData(address: string, user: string) {}
 }
