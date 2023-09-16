@@ -26,15 +26,7 @@ export class FormatDataInterceptor<T>
         const args = context.getArgs();
         const { property } = args[0].query;
         if (!property) {
-          if (typeof data === 'bigint') {
-            if (Number.MAX_SAFE_INTEGER >= data) {
-              return { data: Number(data) };
-            } else {
-              return data.toString();
-            }
-          } else {
-            return data;
-          }
+          return { data };
         }
 
         const {
@@ -108,7 +100,7 @@ export class FormatDataInterceptor<T>
 
           return {
             data: {
-              raw: numberTimestamp,
+              raw: data,
               userStakedTimestamp: {
                 timestampInSeconds: numberTimestamp,
                 timestampInMilliseconds: numberTimestamp * 1000,
@@ -149,15 +141,7 @@ export class FormatDataInterceptor<T>
           return result;
         }
 
-        if (typeof data === 'bigint') {
-          if (Number.MAX_SAFE_INTEGER >= data) {
-            return { data: Number(data) };
-          } else {
-            return data.toString();
-          }
-        } else {
-          return data;
-        }
+        return { data };
       }),
     );
   }
