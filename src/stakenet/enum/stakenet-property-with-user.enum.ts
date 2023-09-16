@@ -1,4 +1,4 @@
-export enum StakenetPropertyWithRequiredUser {
+export enum StakenetPropertyWithUser {
   userHasStaked = 'userHasStaked',
   userStakedTimestamp = 'userStakedTimestamp',
   balanceOf = 'balanceOf',

@@ -8,7 +8,7 @@ import {
 import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
 import { ContractDataQuery } from './dto/contract-data-query.dto';
 import { StakenetService } from './stakenet.service';
-import { StakenetPropertyWithRequiredUser } from './enum/stakenet-property-with-required-user.enum';
+import { StakenetPropertyWithUser } from './enum/stakenet-property-with-user.enum';
 import { StakenetPropertyWithOwner } from './enum/stakenet-property-with-owner.enum';
 import { StakenetPropertyWithSpender } from './enum/stakenet-property-with-spender.enum';
 import { StakenetPropertyEnum } from './enum/stakenet-property.enum';
@@ -27,7 +27,7 @@ export class StakenetController {
 
     try {
       if (
-        !(property in StakenetPropertyWithRequiredUser) &&
+        !(property in StakenetPropertyWithUser) &&
         !(property in StakenetPropertyWithOwner) &&
         !(property in StakenetPropertyWithSpender)
       ) {
@@ -38,7 +38,7 @@ export class StakenetController {
         return await this.stakenet.getUserData(address, user);
       }
 
-      if (property in StakenetPropertyWithRequiredUser) {
+      if (property in StakenetPropertyWithUser) {
         return await this.stakenet.getPropertyWithUserRequired(
           address,
           property,
