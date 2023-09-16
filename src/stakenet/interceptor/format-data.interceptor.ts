@@ -53,6 +53,10 @@ export class FormatDataInterceptor<T>
 
         //Data type is seconds
         if ([lockDurationInSeconds].includes(property)) {
+          if (typeof data !== 'bigint' || typeof data !== 'number') {
+            return { data };
+          }
+
           const lockDurationInSeconds: bigint = data;
 
           let result: {
@@ -96,6 +100,10 @@ export class FormatDataInterceptor<T>
         }
 
         if ([userStakedTimestamp].includes(property)) {
+          if (typeof data !== 'bigint' || typeof data !== 'number') {
+            return { data };
+          }
+
           const numberTimestamp = Number(data);
 
           return {
@@ -123,11 +131,16 @@ export class FormatDataInterceptor<T>
             balanceOf,
           ].includes(property)
         ) {
+          if (typeof data !== 'bigint') {
+            return { data };
+          }
+
           const result = {
             data: {
               raw: data.toString(),
             },
           };
+
           result.data[property] = {
             wei: ethers.formatUnits(data, 'wei'),
             gwei: ethers.formatUnits(data, 'gwei'),
