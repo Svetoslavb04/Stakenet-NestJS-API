@@ -65,6 +65,5 @@ export class StakenetController {
         'Ethereum address is not an Stakenet contract',
       );
     }
-    return true;
   }
 }
