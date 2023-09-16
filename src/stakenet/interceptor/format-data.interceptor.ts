@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StakenetPropertyEnum } from '../enum/stakenet-property.enum';
+import { ethers } from 'ethers';
 
 export interface Response<T> {
   data: T;
@@ -25,11 +26,33 @@ export class FormatDataInterceptor<T>
         const args = context.getArgs();
         const { property } = args[0].query;
         if (!property) {
-          return { data: typeof data === 'bigint' ? data.toString() : data };
+          if (typeof data === 'bigint') {
+            if (Number.MAX_SAFE_INTEGER >= data) {
+              return { data: Number(data) };
+            } else {
+              return data.toString();
+            }
+          } else {
+            return data;
+          }
         }
 
+        const {
+          lockDurationInSeconds,
+          userStakedTimestamp,
+          allowance,
+          totalRewards,
+          rewards,
+          contractStakeLimit,
+          userStakeLimit,
+          userMinimumStake,
+          calculateMinStake,
+          totalSupply,
+          balanceOf,
+        } = StakenetPropertyEnum;
+
         //Data type is seconds
-        if ([StakenetPropertyEnum.lockDurationInSeconds].includes(property)) {
+        if ([lockDurationInSeconds].includes(property)) {
           const lockDurationInSeconds: bigint = data;
 
           let result: {
@@ -72,7 +95,7 @@ export class FormatDataInterceptor<T>
           return result;
         }
 
-        if ([StakenetPropertyEnum.userStakedTimestamp].includes(property)) {
+        if ([userStakedTimestamp].includes(property)) {
           const numberTimestamp = Number(data);
 
           return {
@@ -87,7 +110,41 @@ export class FormatDataInterceptor<T>
           };
         }
 
-        return { data: typeof data === 'bigint' ? data.toString() : data };
+        if (
+          [
+            allowance,
+            totalRewards,
+            rewards,
+            contractStakeLimit,
+            userStakeLimit,
+            userMinimumStake,
+            calculateMinStake,
+            totalSupply,
+            balanceOf,
+          ].includes(property)
+        ) {
+          const result = {
+            data: {
+              raw: data.toString(),
+            },
+          };
+          result.data[property] = {
+            wei: ethers.formatUnits(data, 'wei'),
+            gwei: ethers.formatUnits(data, 'gwei'),
+            ether: ethers.formatEther(data),
+          };
+          return result;
+        }
+
+        if (typeof data === 'bigint') {
+          if (Number.MAX_SAFE_INTEGER >= data) {
+            return { data: Number(data) };
+          } else {
+            return data.toString();
+          }
+        } else {
+          return data;
+        }
       }),
     );
   }
