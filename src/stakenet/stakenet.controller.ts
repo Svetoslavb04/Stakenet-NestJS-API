@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { EthereumAddressDTO } from '../dto/ethereumAdress.dto';
 import { ContractDataQuery } from './dto/contract-data-query.dto';
@@ -12,12 +13,14 @@ import { StakenetPropertyWithUser } from './enum/stakenet-property-with-user.enu
 import { StakenetPropertyWithOwner } from './enum/stakenet-property-with-owner.enum';
 import { StakenetPropertyWithSpender } from './enum/stakenet-property-with-spender.enum';
 import { StakenetPropertyEnum } from './enum/stakenet-property.enum';
+import { FormatDataInterceptor } from './interceptor/format-data.interceptor';
 
 @Controller('contract')
 export class StakenetController {
   constructor(private stakenet: StakenetService) {}
 
   @Get(':address')
+  @UseInterceptors(FormatDataInterceptor)
   async index(
     @Param('') params: EthereumAddressDTO,
     @Query('') contractDataQuery: ContractDataQuery,
