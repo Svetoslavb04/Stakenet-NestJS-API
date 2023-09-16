@@ -1,4 +1,5 @@
-import { IsEthereumAddress, IsNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { IsEthereumAddress } from '../decorator/is-ethereum-addres.decorator';
 
 export class EthereumAddressDTO {
   @IsEthereumAddress()

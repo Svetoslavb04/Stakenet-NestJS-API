@@ -1,9 +1,5 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsEthereumAddress,
-  ValidateIf,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, ValidateIf } from 'class-validator';
+import { IsEthereumAddress } from '../../decorator/is-ethereum-addres.decorator';
 import { StakenetPropertyEnum } from '../enum/stakenet-property.enum';
 import { StakenetPropertyWithUser } from '../enum/stakenet-property-with-user.enum';
 import { StakenetPropertyWithOwner } from '../enum/stakenet-property-with-owner.enum';
