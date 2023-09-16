@@ -19,6 +19,8 @@ export class StakenetService {
     if (typeof stakenet[property] === 'function') {
       return await stakenet[property]();
     }
+
+    throw new Error('The contract does not have such function');
   }
 
   async getPropertyWithUserRequired(
@@ -31,6 +33,8 @@ export class StakenetService {
     if (typeof stakenet[property] === 'function') {
       return await stakenet[property](user);
     }
+
+    throw new Error('The contract does not have such function');
   }
 
   async getPropertyWithOwnerAndSpender(
@@ -44,6 +48,8 @@ export class StakenetService {
     if (typeof stakenet[property] === 'function') {
       return await stakenet[property](owner, spender);
     }
+
+    throw new Error('The contract does not have such function');
   }
 
   async getUserData(address: string, user: string) {}

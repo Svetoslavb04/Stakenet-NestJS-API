@@ -59,4 +59,27 @@ describe('StakenetService', () => {
 
     expect(result).toEqual(0n);
   });
+
+  it('should throw error if contract does not have the function', () => {
+    expect(() =>
+      service.getPropertyData(stakenetAddress, 'asdasd'),
+    ).rejects.toThrow('The contract does not have such function');
+
+    expect(() =>
+      service.getPropertyWithUserRequired(
+        stakenetAddress,
+        'asdasd',
+        '0x9120250530053c5350B34Ebcd3f3824f33a0d167',
+      ),
+    ).rejects.toThrow('The contract does not have such function');
+
+    expect(() =>
+      service.getPropertyWithOwnerAndSpender(
+        stakenetAddress,
+        'asdasd',
+        '0x9120250530053c5350B34Ebcd3f3824f33a0d167',
+        '0x9120250530053c5350B34Ebcd3f3824f33a0d167',
+      ),
+    ).rejects.toThrow('The contract does not have such function');
+  });
 });
