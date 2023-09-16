@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Web3Service } from 'src/web3/web3.service';
-import { Stakenet, Stakenet__factory } from 'types/ethers-contracts';
+import { Web3Service } from '../web3/web3.service';
+import { Stakenet, Stakenet__factory } from '../../types/ethers-contracts';
 
 @Injectable()
 export class StakenetService {
