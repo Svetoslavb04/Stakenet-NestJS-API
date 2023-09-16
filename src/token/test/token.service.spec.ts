@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TokenService } from '../token.service';
 import { Web3Service } from '../../web3/web3.service';
-import { EthereumAddressDTO } from '../../dto/ethereumAdress.dto';
 
 const web3ServiceMock = {
   getContractAt: jest.fn(),
@@ -30,9 +29,7 @@ describe('TokenService', () => {
 
   describe('getTokenBaseInformation', () => {
     it('should get token information', async () => {
-      const mockAddressObject: EthereumAddressDTO = {
-        address: '0xERC20TokenAddress',
-      };
+      const address = '0xERC20TokenAddress';
 
       const mockTokenContract = {
         name: jest.fn().mockResolvedValue('TokenName'),
@@ -42,8 +39,7 @@ describe('TokenService', () => {
 
       web3ServiceMock.getContractAt.mockReturnValue(mockTokenContract);
 
-      const result =
-        await tokenService.getTokenBaseInformation(mockAddressObject);
+      const result = await tokenService.getTokenBaseInformation(address);
 
       expect(result).toEqual({
         name: 'TokenName',

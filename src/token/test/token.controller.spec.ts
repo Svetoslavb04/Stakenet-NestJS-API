@@ -16,8 +16,8 @@ describe('TokenController', () => {
 
   beforeEach(async () => {
     const mockTokenService = {
-      getTokenBaseInformation: jest.fn(async (dto: EthereumAddressDTO) => {
-        switch (dto.address) {
+      getTokenBaseInformation: jest.fn(async (address: string) => {
+        switch (address) {
           case ERC20TokenAddress:
             return mockTokenInfo;
           case NonERC20TokenAddress:
@@ -46,6 +46,7 @@ describe('TokenController', () => {
       const result = await tokenController.index({
         address: ERC20TokenAddress,
       });
+
       expect(result).toEqual(mockTokenInfo);
     });
 
