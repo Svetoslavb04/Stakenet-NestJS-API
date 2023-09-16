@@ -1,13 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { ContractRunner, Networkish, ethers } from 'ethers';
+import {
+  BaseContract,
+  ContractRunner,
+  EventLog,
+  Networkish,
+  InfuraProvider,
+} from 'ethers';
 
 @Injectable()
 export class Web3Service {
   constructor(private config: ConfigService) {}
 
   getInfuraProvider(network: Networkish) {
-    return new ethers.InfuraProvider(
+    return new InfuraProvider(
       network,
       this.config.get('INFURA_API_KEY') || null,
       this.config.get('INFURA_API_KEY_SECRET') || null,
@@ -28,5 +34,17 @@ export class Web3Service {
     }
 
     throw new Error(`Method 'connect' not found on the factory.`);
+  }
+
+  async getEvents<TContract extends BaseContract>(
+    contract: TContract,
+    event: string,
+    ...args
+  ): Promise<EventLog[]> {
+    const filter = contract.filters[event](...args);
+
+    const events = (await contract.queryFilter(filter)) as EventLog[];
+
+    return events;
   }
 }
