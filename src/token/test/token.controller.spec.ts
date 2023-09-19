@@ -45,7 +45,7 @@ describe('TokenController', () => {
         address: ERC20TokenAddress,
       });
 
-      expect(result).toEqual(mockTokenInfo);
+      expect(result).toEqual({ data: mockTokenInfo });
     });
 
     it('should handle an error and throw BadRequestException on a non ERC20 address', async () => {

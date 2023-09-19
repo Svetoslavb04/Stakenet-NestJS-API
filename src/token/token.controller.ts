@@ -12,7 +12,7 @@ export class TokenController {
       const tokenInformation = await this.token.getTokenBaseInformation(
         params.address,
       );
-      return tokenInformation;
+      return { data: tokenInformation };
     } catch (error) {
       throw new BadRequestException('Ethereum address is not an ERC20 token');
     }

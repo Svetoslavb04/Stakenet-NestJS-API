@@ -32,9 +32,11 @@ describe('TokenController (e2e)', () => {
       return request(app.getHttpServer())
         .get('/token/0x2BdFb6a7B89e933B0A8c34E3dcc32E8C684c7738')
         .expect(200, {
-          name: 'LimeSpark',
-          symbol: 'LSK',
-          decimals: '18',
+          data: {
+            name: 'LimeSpark',
+            symbol: 'LSK',
+            decimals: '18',
+          },
         });
     });
 
