@@ -28,7 +28,7 @@ describe('TokenController (e2e)', () => {
   });
 
   describe('/token/:address (GET)', () => {
-    it('Should return correct token information', async () => {
+    it('should return correct token information', async () => {
       return request(app.getHttpServer())
         .get('/token/0x2BdFb6a7B89e933B0A8c34E3dcc32E8C684c7738')
         .expect(200, {
@@ -38,7 +38,7 @@ describe('TokenController (e2e)', () => {
         });
     });
 
-    it('Should throw BadRequest on Ethereum address that is not ERC20 Token', async () => {
+    it('should throw BadRequest on Ethereum address that is not ERC20 Token', async () => {
       return request(app.getHttpServer())
         .get('/token/0x9120250530053c5350B34Ebcd3f3824f33a0d167')
         .expect(400, {
@@ -48,7 +48,7 @@ describe('TokenController (e2e)', () => {
         });
     });
 
-    it('Should throw BadRequest on invalid Ethereum address', async () => {
+    it('should throw BadRequest on invalid Ethereum address', async () => {
       return request(app.getHttpServer())
         .get('/token/invalid-address')
         .expect(400, {

@@ -30,7 +30,7 @@ describe('StakenetController (e2e)', () => {
   });
 
   describe('/contract/:address (GET)', () => {
-    it('Should throw Bad Request if property query param is not provided', async () => {
+    it('should throw Bad Request if property query param is not provided', async () => {
       return request(app.getHttpServer())
         .get(prefix)
         .expect(400, {
@@ -43,7 +43,7 @@ describe('StakenetController (e2e)', () => {
         });
     });
 
-    it('Should throw if user is missing', async () => {
+    it('should throw if user is missing', async () => {
       return request(app.getHttpServer())
         .get(prefix + '?property=userData')
         .expect(400, {
@@ -56,7 +56,7 @@ describe('StakenetController (e2e)', () => {
         });
     });
 
-    it('Should throw if owner, spender are missing', async () => {
+    it('should throw if owner, spender are missing', async () => {
       request(app.getHttpServer())
         .get(prefix + '?property=allowance')
         .expect(400, {
