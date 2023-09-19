@@ -25,8 +25,13 @@ export class FormatDataInterceptor<T>
       map((data) => {
         const args = context.getArgs();
         const { property } = args[0].query;
+
         if (!property) {
-          return { data };
+          if (typeof data !== 'bigint') {
+            return { data };
+          } else {
+            return { data: data.toString() };
+          }
         }
 
         const {
@@ -41,19 +46,28 @@ export class FormatDataInterceptor<T>
           calculateMinStake,
           totalSupply,
           balanceOf,
+          userData,
         } = StakenetPropertyEnum;
 
         //Data type is seconds
         if ([lockDurationInSeconds].includes(property)) {
-          if (typeof data !== 'bigint' || typeof data !== 'number') {
+          if (typeof data === 'string') {
+            try {
+              data = BigInt(data);
+            } catch (error) {
+              return { data };
+            }
+          }
+
+          if (typeof data !== 'bigint' && typeof data !== 'number') {
             return { data };
           }
 
-          const lockDurationInSeconds: bigint = data;
+          const lockDurationInSeconds = BigInt(data);
 
           let result: {
             data: {
-              raw: string;
+              raw: number | string;
               lockDurationIn: {
                 days: number | string;
                 hours: number | string;
@@ -77,6 +91,7 @@ export class FormatDataInterceptor<T>
 
           if (lockDurationInSeconds <= Number.MAX_SAFE_INTEGER) {
             const lockDurationInSecondsNumber = Number(lockDurationInSeconds);
+            result.data.raw = lockDurationInSecondsNumber;
             result.data.lockDurationIn.days =
               lockDurationInSecondsNumber / 86400;
             result.data.lockDurationIn.hours =
@@ -92,7 +107,17 @@ export class FormatDataInterceptor<T>
         }
 
         if ([userStakedTimestamp].includes(property)) {
-          if (typeof data !== 'bigint' || typeof data !== 'number') {
+          if (typeof data === 'string') {
+            const dataToNumber = Number(data);
+
+            if (isNaN(dataToNumber)) {
+              return { data };
+            }
+
+            data = dataToNumber;
+          }
+
+          if (typeof data !== 'bigint' && typeof data !== 'number') {
             return { data };
           }
 
@@ -100,11 +125,11 @@ export class FormatDataInterceptor<T>
 
           return {
             data: {
-              raw: data,
+              raw: numberTimestamp,
               userStakedTimestamp: {
                 timestampInSeconds: numberTimestamp,
                 timestampInMilliseconds: numberTimestamp * 1000,
-                date: new Date(numberTimestamp * 1000),
+                dateObject: this.formatDate(new Date(numberTimestamp * 1000)),
               },
             },
           };
@@ -123,7 +148,15 @@ export class FormatDataInterceptor<T>
             balanceOf,
           ].includes(property)
         ) {
-          if (typeof data !== 'bigint') {
+          if (typeof data === 'string') {
+            try {
+              data = BigInt(data);
+            } catch (error) {
+              return { data };
+            }
+          }
+
+          if (typeof data !== 'bigint' && typeof data !== 'number') {
             return { data };
           }
 
@@ -138,11 +171,90 @@ export class FormatDataInterceptor<T>
             gwei: ethers.formatUnits(data, 'gwei'),
             ether: ethers.formatEther(data),
           };
+
           return result;
         }
 
-        return { data };
+        if (property === userData) {
+          const {
+            userHasPosition,
+            balance,
+            reward,
+            userHasStaked,
+            userStakedTimestamp,
+            lockDurationInSeconds,
+          } = data;
+
+          const stakeDate = new Date(Number(userStakedTimestamp * 1000n));
+
+          const canWithdrawAfter = new Date(
+            Number((userStakedTimestamp + lockDurationInSeconds) * 1000n),
+          );
+
+          const balanceFormatted = {
+            wei: ethers.formatUnits(balance, 'wei'),
+            gwei: ethers.formatUnits(balance, 'gwei'),
+            ether: ethers.formatEther(balance),
+          };
+
+          const rewardFormatted = {
+            wei: ethers.formatUnits(reward, 'wei'),
+            gwei: ethers.formatUnits(reward, 'gwei'),
+            ether: ethers.formatEther(reward),
+          };
+
+          return {
+            data: {
+              userHasPosition,
+              balance: balanceFormatted,
+              reward: rewardFormatted,
+              userHasStaked,
+              userStakedTimestamp: {
+                timestamp: Number(userStakedTimestamp),
+                timestampInMilliseconds: Number(userStakedTimestamp) * 1000,
+                dateObject:
+                  Number(userStakedTimestamp) > 0
+                    ? this.formatDate(stakeDate)
+                    : 0,
+              },
+              canWithdrawAfter: {
+                timestamp:
+                  Number(userStakedTimestamp) > 0
+                    ? Number(userStakedTimestamp) +
+                      Number(lockDurationInSeconds)
+                    : 0,
+                timestampInMilliseconds:
+                  Number(userStakedTimestamp) > 0
+                    ? (Number(userStakedTimestamp) +
+                        Number(lockDurationInSeconds)) *
+                      1000
+                    : 0,
+                dateObject:
+                  Number(userStakedTimestamp) > 0
+                    ? this.formatDate(canWithdrawAfter)
+                    : 0,
+              },
+            },
+          };
+        }
+
+        if (typeof data !== 'bigint') {
+          return { data };
+        } else {
+          return { data: data.toString() };
+        }
       }),
     );
+  }
+
+  formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 }
