@@ -32,12 +32,12 @@
   },
   {
     "inputs": [],
-    "name": "AccountHasAlreadyStaked",
+    "name": "AccountDoesNotOwnAPosition",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "AccountHasNotStaked",
+    "name": "AccountHasAlreadyStaked",
     "type": "error"
   },
   {
