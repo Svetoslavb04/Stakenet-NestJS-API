@@ -40,6 +40,83 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Endpoints
+
+Here are the endpoints available in the Stakenet API:
+
+- [Retrieve Token Information](#retrieve-token-information)
+- [Retrieve Contract Data](#retrieve-contract-data)
+
+### Retrieve Token Information
+
+This endpoint allows you to retrieve information about a specific ERC20 token by its Ethereum address.
+
+- **URL**: `/token/:address`
+- **Method**: `GET`
+- **Parameters**:
+  - `address` (string, required): The Ethereum address of the ERC20 token.
+
+#### Example
+
+```bash
+GET /token/0x2BdFb6a7B89e933B0A8c34E3dcc32E8C684c7738
+```
+
+#### Response
+
+- **200 OK**: `Returns information about the ERC20 token.`
+- **400 Bad Request**: `If the Ethereum address is not an ERC20 token.`
+
+#### Response Body
+
+```json
+{
+  "data": {
+    // Token information here
+  }
+}
+```
+
+### Retrieve Contract Data
+
+This endpoint allows you to retrieve various data related to a Stakenet contract.
+
+- **URL**: `/contract/:address`
+- **Method**: `GET`
+- **Parameters**:
+  - `address` (string, required): The Ethereum address of the Stakenet contract.
+  - `property` (string, required): The property of the contract to retrieve.
+  - `user` (string, optional): The user associated with the property (required for some properties).
+  - `owner` (string, optional): The owner associated with the property (required for some properties).
+  - `spender` (string, optional): The spender associated with the property (required for some properties).
+
+#### Example
+
+```
+GET /contract/0x2BdFb6a7B89e933B0A8c34E3dcc32E8C684c7738?property=userData&user=0x0c9276b8bAf2b37140679204027d574AC2D71297
+```
+
+#### Response
+
+- **200 OK**: `Returns the requested contract data.`
+- **400 Bad Request**: `If the Ethereum address is not a Stakenet contract.`
+
+#### Response Body
+
+```json
+{
+  "data": {
+    // User data here formatted in different units
+    userHasPosition,
+    balance,
+    rewards,
+    userHasStaked,
+    userStakedTimestamp,
+    canWithdrawAfter
+  }
+}
+```
+
 ## Stay in touch
 
 - Author - [Svetoslav Borislavov](https://www.linkedin.com/in/svetoslavborislavov/)
